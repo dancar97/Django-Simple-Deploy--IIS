@@ -197,3 +197,19 @@ now its time to generate a statics folder for the project. Open a console that p
 python manage.py collectstatic
 ```
 
+this will create a new folder called "static", open that folder and create a new "web.config" file with this inside:
+
+```
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration>
+	<system.webServer>
+        <!-- Overrides the FastCGI handler to let IIS serve the static files -->
+		<handlers>
+            <clear/>
+			<add name="StaticFile" path="*" verb="*" modules="StaticFileModule" resourceType="File" requireAccess="Read" />              
+		</handlers>
+	</system.webServer>
+</configuration>
+```
+
+Now open the IIS and on your server, search for "Configurations editor" under the management tab. Click on it and open the "system/webServer.handlers and unlock it by clicking "unlock" on the right side panel
