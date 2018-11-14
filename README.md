@@ -4,8 +4,9 @@ A simple example for deploying a basic Django app on IIS
 ### Notes:
 + Python version: 3.6
 + Django version: 2.1.3
-+ psycopg2 version: 2.7.6
-+ djangorestframework version: 3.0.9
++ wfastcgi version : 3.0.0
++ psycopg2 version: 2.7.6 (If you want to run on postgresql)
++ djangorestframework version: 3.0.9 (If you want to run a rest service)
 + requests version: 2.20.1
 ---
 #### Important:  
@@ -28,9 +29,7 @@ If you had to change your path, you should check the environment variables to ad
 
 You have to install:
   + Django
-  + djangorestframework
   + requests
-  + psycopg2
 
 For working versions you may want to check the first part of this readme
 
@@ -124,6 +123,77 @@ Now we have our app runing, try to write:
 
 ## 6. IIS conection
 
+We have to install wfastcgi via pip, use:
+```
+pip install wfastcgi
+```
+now run this via console:
+ ```
+ wfastcgi-disable
+ wfastcgi-enable
+ ```
+ 
+Pay attention to the output, there should be something like this:
+>"your python path"|"your wfastcgi path"
 
+Go to your wfastcgi path and copy "wfastcgi.py" and paste it on your django project folder, next to manage.py
 
+Go to IIS manager and create your new Website, point the path to your django project folder
+
+We need to create a web.config file with this code inside:
+  ```
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration>
+	<system.webServer>
+		<handlers>
+  
+			<add name="Python FastCGI" path="*" verb="*" modules="FastCgiModule" scriptProcessor="c:\python3\python.exe|&quot;C:\path_to_Django_project\wfastcgi.py&quot;" resourceType="Unspecified" requireAccess="Script" />
+		</handlers>\
+	</system.webServer> 
+
+	<appSettings>
+
+		<add key="WSGI_HANDLER" value="name_of_app.wsgi.application" />
+		<add key="PYTHONPATH" value="C:\Path\toProject" />
+
+		
+
+		<add key="DJANGO_SETTINGS_MODULE" value="name_of_app.settings" />
+	</appSettings>
+</configuration>
+```
+
+On 'scriptProcessor' you should change the first part to: 
+```
+your python path|"your wfastcgi.py(in the project folder, not the python folder)"
+```
+
+be careful with the quotation marks at the second part, you should leave them
+
+also, change "name_of_app" with the name you gave on the "python manage.py startapp" to your app
+
+* note: notice the 
+```
+&quot;
+```
+on the scriptProcessor part, you should only leave double quotation marks on the wfastcgi.py part, not on your python path(unless it has whitespaces, wich is a big problem during this installation)
+
+Now we have to set our project folder to a pool, we are going to do this by right clicking our django project parent directory and we are going to select properties.
+
+Then, on security tab you may find an 'Edit' button. Click on it and select "add".
+
+On name write:
+```
+IIS AppPool/"your_pool"
+```
+click on check names and click the 'Ok' button.
+click 'apply' and 'ok' buttons untill you are done with the properties window.
+
+* note: if you have problems of security later, you may want to re do this whole part for your python folder
+
+now its time to generate a statics folder for the project. Open a console that points to your "manage.py" again and write:
+
+```
+python manage.py collectstatic
+```
 
