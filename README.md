@@ -38,7 +38,7 @@ to install you have to write this on a command prompt:
 pip install "your library here"
 ```
 ## 3. Building a basic Django project
-To make a basic Django project you have to run the following comands:
+To make a basic Django project you have to run the following commands:
 ```
 django-admin startproject "Name of the project" 
 ```
@@ -59,7 +59,7 @@ python manage.py startapp "Name of the app"
 
 ## 4. Creating migrations
 
-By default Django works with an SQLite database, you can change that configuration on the "settings.py" script. for more information you should check the oficial django documentation [right here](https://docs.djangoproject.com/)
+By default Django works with an SQLite database, you can change that configuration on the "settings.py" script. for more information you should check the official django documentation [right here](https://docs.djangoproject.com/)
 
 To create migrations we first may want to add our app into the "settings.py" script.
 Under 'INSTALLED_APPS' you should write:
@@ -93,7 +93,7 @@ Use:
 python manage.py makemigrations
 python manage.py migrate
 ```
-This comands create space on the DB for the default django admin information and the model you just created.
+This commands create space on the DB for the default django admin information and the model you just created.
 
 Now we have to make a superuser acount for the default admin:
 ```
@@ -121,7 +121,7 @@ Now we have our app runing, try to write:
 
 > http://127.0.0.1:8000/admin
 
-## 6. IIS conection
+## 6. IIS connection
 
 We have to install wfastcgi via pip, use:
 ```
@@ -226,7 +226,7 @@ Click on it and add a new Managed Handler.
 
 Name your module FastCgiModule.
 
-On excecutable paste the same path that was on your Web.config under scriptprocessor.
+On executable paste the same path that was on your Web.config under scriptprocessor.
 
 >PythonPath|"project's wfastcgi.py" 
 
