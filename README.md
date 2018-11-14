@@ -212,4 +212,24 @@ this will create a new folder called "static", open that folder and create a new
 </configuration>
 ```
 
-Now open the IIS and on your server, search for "Configurations editor" under the management tab. Click on it and open the "system/webServer.handlers and unlock it by clicking "unlock" on the right side panel
+Now open the IIS and on your server, search for "Configurations editor" under the management tab. Click on it and open the "system/webServer.handlers and unlock it by clicking "unlock" on the right side panel.
+
+---
+* Note: Next step is optional:
+
+##### If you want to add your static folder to the project, go to IIS and right click your Website. Select the add virtual directory and name it "static" then you just have to point at the static folder that was created a few steps before in the django project.
+---
+
+
+For our final step, we have to select our webpage on the IIS, search for "Handler Mappings" under IIS tab.
+Click on it and add a new Managed Handler.
+
+Name your module FastCgiModule.
+
+On excecutable paste the same path that was on your Web.config under scriptprocessor.
+
+>PythonPath|"project's wfastcgi.py" 
+
+now just click 'ok' and everything should be working.
+
+
