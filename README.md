@@ -1,5 +1,5 @@
 # Django-Simple-Deploy--IIS
-A simple example for deploying a basic Django app on IIS
+A simple example for deploying a basic Django app over IIS
 
 ### Notes:
 + Python version: 3.6
